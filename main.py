@@ -151,48 +151,42 @@ def center_text(y, s, c, sc=2):
 
 # ---------------------------------------------------------------- stories
 STORIES = [
-    (RED, "TURKEY", "COP31 climate talks",
-     "collapse in Antalya; no", "fossil-fuel deal"),
-    (RED, "USA-IRAN", "Trump wants permanent",
-     "Iran deal; threatens", "new strikes in 2027"),
-    (BLUE, "GULF", "Saudi intercepts Houthi",
-     "drone, missile; Iran hit", "Bahrain facility"),
-    (RED, "UKRAINE", "Kryvyi Rih strike kills",
-     "2 (a 7-year-old boy),", "wounds 60 - AP"),
-    (RED, "UKRAINE", "Kyiv: drone hits flat;",
-     "two dead, children", "among the missing"),
-    (RED, "ODESA", "Schools go remote as",
-     "strikes cut heating,", "power and water"),
-    (BLUE, "SHENZHEN", "First China-Russia-US",
-     "trilateral summit, hosted", "by Xi: 'historic'"),
-    (GREEN, "APEC", "Xi chairs APEC leaders'",
-     "meeting; 2026 growth", "forecast raised 3.4%"),
-    (AMBER, "KOREA", "Education minister quits",
-     "over anti-AI cheating", "rules after CSAT scandal"),
-    (RED, "WEST BANK", "Settler attacks: a dozen",
-     "cars torched; minister", "decries 'Jewish terror'"),
-    (AMBER, "INDONESIA", "Banten candy factory",
-     "fire: 3 workers dead,", "about 50 still missing"),
-    (RED, "FBI", "Reported hack of FBI",
-     "criminal-justice DB;",
-     "Trump: 'not good'"),
-    (BLUE, "USA", "Sen. Kennedy pushes",
-     "probe of Lutnick over", "Chinese Nvidia access"),
-    (GREEN, "GENEVA", "UN pledges to curb",
-     "killer robots by 2028;",
-     "Russia resisted"),
-    (AMBER, "IOWA", "Army to blow up 68",
-     "toxic barrels Tuesday,",
-     "bypassing court order"),
-    (RED, "MEXICO", "FBI most-wanted drug",
-     "lord arrested in",
-     "Sinaloa"),
-    (GREEN, "ARGENTINA", "Wife held over Italian",
-     "fugitive's daring",
-     "escape"),
-    (BLUE, "SPORTS", "Boca Juniors win the",
-     "Copa Sudamericana",
-     "final"),
+    (RED, "TURKEY", "COP31 talks fail in",
+     "Antalya; no fossil", "fuel deal reached"),
+    (RED, "USA-IRAN", "Trump seeks lasting",
+     "Iran deal; warns", "of new strikes"),
+    (BLUE, "GULF", "Saudi downs Houthi",
+     "drone, missile; Iran", "strikes Bahrain plant"),
+    (RED, "KRYVYIRIH", "Russian missile hits",
+     "Kryvyi Rih; two", "dead including child"),
+    (RED, "KYIV", "Kyiv apartment hit",
+     "by drone; two", "dead, kids missing"),
+    (RED, "ODESA", "Odesa schools shift",
+     "remote as strikes", "cut heat, power"),
+    (BLUE, "SHENZHEN", "Xi hosts first",
+     "China-Russia-US", "summit in Shenzhen"),
+    (GREEN, "APEC", "APEC forecast raised",
+     "to 3.4% at", "Shenzhen meeting"),
+    (AMBER, "KOREA", "Korea minister quits",
+     "over AI cheating", "rules, CSAT scandal"),
+    (RED, "WESTBANK", "Settlers torch dozen",
+     "cars in West", "Bank; minister slams"),
+    (AMBER, "INDONESIA", "Banten factory fire",
+     "kills three, fifty", "workers still missing"),
+    (RED, "FBI", "FBI database breach",
+     "reported; Trump says", "'not good' on hack"),
+    (BLUE, "USA", "Kennedy seeks probe",
+     "of Lutnick on", "China Nvidia access"),
+    (GREEN, "GENEVA", "UN vows robot",
+     "arms rules by", "2028; Russia resists"),
+    (AMBER, "IOWA", "Army to detonate",
+     "68 toxic barrels", "in Iowa Tuesday"),
+    (RED, "MEXICO", "Top cartel boss",
+     "arrested in", "Sinaloa, Mexico"),
+    (GREEN, "ARGENTINA", "Wife held over",
+     "Italian escape in", "Argentina"),
+    (BLUE, "SPORTS", "Boca Juniors win",
+     "Copa Sudamericana", "title in final"),
 ]
 
 
@@ -212,9 +206,9 @@ def draw():
     rect(bx0, by0, bx1, by1, DARKPANEL)
     rect(bx0, by0, bx0 + 10, by1, RED)
     text(bx0 + 30, by0 + 12, "LEAD STORY - COP31 ANTALYA", (230, 220, 200), 2)
-    text(bx0 + 30, by0 + 36, "CLIMATE TALKS COLLAPSE;", PAPER, 3)
-    text(bx0 + 30, by0 + 64, "NO DEAL ON FOSSIL FUELS", PAPER, 3)
-    text(bx0 + 30, by0 + 96, "EU AND ISLAND STATES WALK OUT - REUTERS", (200, 200, 205), 2)
+    text(bx0 + 30, by0 + 36, "CLIMATE SUMMIT COLLAPSES", PAPER, 3)
+    text(bx0 + 30, by0 + 64, "NO FOSSIL-FUEL AGREEMENT", PAPER, 3)
+    text(bx0 + 30, by0 + 96, "EU AND ISLAND NATIONS REJECT DRAFT - REUTERS", (200, 200, 205), 2)
 
     # ---- story grid 3x6
     gy0 = by1 + 14
@@ -239,8 +233,8 @@ def draw():
     rect(32, my, W - 32, my + 58, (238, 234, 226))
     rect(32, my, W - 32, my + 58, RULE)
     text(48, my + 9, "DATE CHECK: ALL 18 STORIES SUNDAY 22 NOV 2026 - 9 REGIONS", INK, 2)
-    stats = [("COP31", "NO DEAL", RED), ("BANTEN", "3 DEAD, 50 MISSING", RED),
-             ("KYIV+RIH", "4 DEAD", RED), ("APEC", "+3.4% GROWTH", GREEN)]
+    stats = [("COP31", "NO DEAL", RED), ("BANTEN", "3 DEAD 50 MISSING", RED),
+             ("KYIV+RIH", "4 DEAD", RED), ("APEC", "+3.4%", GREEN)]
     sx = 48
     for name, val, col in stats:
         text(sx, my + 27, name, GREY, 2)
