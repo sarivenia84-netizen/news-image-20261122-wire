@@ -149,6 +149,7 @@ def center_text(y, s, c, sc=2):
     x = (W - twidth(s, sc)) // 2
     text(x, y, s, c, sc)
 
+
 # ---------------------------------------------------------------- stories
 STORIES = [
     (RED, "TURKEY", "COP31 talks fail in",
@@ -190,65 +191,130 @@ STORIES = [
 ]
 
 
-def draw():
-    # ---- masthead
-    rect(0, 0, W, 8, INK)
-    rect(0, 8, W, 9, RED)
-    y = 34
+# ---------------------------------------------------------------- layout constants
+MASTHEAD_TOP = 8
+MASTHEAD_RED_LINE = 9
+TITLE_Y = 34
+SUBTITLE_OFFSET = 64
+RULE_Y_OFFSET = 30
+RULE2_Y_OFFSET = 36
+
+BANNER_X0 = 48
+BANNER_X1 = W - 48
+BANNER_Y0_OFFSET = 46
+BANNER_HEIGHT = 130
+BANNER_ACCENT_W = 10
+
+GRID_X0 = 32
+GRID_Y0_OFFSET = 14
+CARD_W = 312
+CARD_H = 80
+CARD_GAP = 10
+COLS = 3
+
+STRIP_X0 = 32
+STRIP_X1 = W - 32
+STRIP_Y_OFFSET = 4
+STRIP_H = 58
+STRIP_BG = (238, 234, 226)
+
+FOOTER_Y = H - 26
+FOOTER_X0 = 64
+
+STATS = [
+    ("COP31", "NO DEAL", RED),
+    ("BANTEN", "3 DEAD 50 MISSING", RED),
+    ("KYIV+RIH", "4 DEAD", RED),
+    ("APEC", "+3.4%", GREEN),
+]
+STAT_START_X = 48
+STAT_GAP_X = 235
+STAT_NAME_Y = 27
+STAT_VAL_Y = 42
+
+
+# ---------------------------------------------------------------- drawing sections
+def draw_masthead():
+    """Draw the top masthead with title and subtitle."""
+    rect(0, 0, W, MASTHEAD_TOP, INK)
+    rect(0, MASTHEAD_RED_LINE, W, MASTHEAD_RED_LINE + 1, RED)
+    y = TITLE_Y
     center_text(y, "THE WIRE", INK, 9)
-    y += 64
+    y += SUBTITLE_OFFSET
     center_text(y, "ONE PAGE - EVERY STORY - SUNDAY 22 NOVEMBER 2026", GREY, 2)
-    hline(48, W - 48, y + 30, INK, 3)
-    hline(48, W - 48, y + 36, RULE, 1)
-
-    # ---- lead story banner
-    bx0, by0, bx1, by1 = 48, y + 46, W - 48, y + 176
-    rect(bx0, by0, bx1, by1, DARKPANEL)
-    rect(bx0, by0, bx0 + 10, by1, RED)
-    text(bx0 + 30, by0 + 12, "LEAD STORY - COP31 ANTALYA", (230, 220, 200), 2)
-    text(bx0 + 30, by0 + 36, "CLIMATE SUMMIT COLLAPSES", PAPER, 3)
-    text(bx0 + 30, by0 + 64, "NO FOSSIL-FUEL AGREEMENT", PAPER, 3)
-    text(bx0 + 30, by0 + 96, "EU AND ISLAND NATIONS REJECT DRAFT - REUTERS", (200, 200, 205), 2)
-
-    # ---- story grid 3x6
-    gy0 = by1 + 14
-    cw, ch, gap = 312, 80, 10
-    gx0 = 32
-    for i, (col, tag, l1, l2, l3) in enumerate(STORIES):
-        r, cix = divmod(i, 3)
-        x0 = gx0 + cix * (cw + gap)
-        y0 = gy0 + r * (ch + gap)
-        rect(x0, y0, x0 + cw, y0 + ch, (255, 253, 248))
-        rect(x0, y0, x0 + cw, y0 + ch, RULE)
-        rect(x0, y0, x0 + cw, y0 + 3, col)
-        rect(x0 + 8, y0 + 9, x0 + 8 + twidth(tag, 1) + 8, y0 + 21, col)
-        text(x0 + 12, y0 + 12, tag, PAPER, 1)
-        for k, line in enumerate((l1, l2, l3)):
-            text(x0 + 8, y0 + 24 + k * 16, line, INK, 2)
-        # tiny map-pin dot
-        rect(x0 + cw - 20, y0 + ch - 14, x0 + cw - 14, y0 + ch - 8, col)
-
-    # ---- date-check + markets strip
-    my = gy0 + 7 * ch + 6 * gap + 4
-    rect(32, my, W - 32, my + 58, (238, 234, 226))
-    rect(32, my, W - 32, my + 58, RULE)
-    text(48, my + 9, "DATE CHECK: ALL 18 STORIES SUNDAY 22 NOV 2026 - 9 REGIONS", INK, 2)
-    stats = [("COP31", "NO DEAL", RED), ("BANTEN", "3 DEAD 50 MISSING", RED),
-             ("KYIV+RIH", "4 DEAD", RED), ("APEC", "+3.4%", GREEN)]
-    sx = 48
-    for name, val, col in stats:
-        text(sx, my + 27, name, GREY, 2)
-        text(sx, my + 42, val, col, 2)
-        sx += 235
-
-    # ---- footer
-    text(64, H - 26, "SOURCES: AP - REUTERS - AL JAZEERA - AFP - UN NEWS - ICJ",
-         GREY, 1)
-    text(W - 64 - twidth("THE WIRE / 2026", 1), H - 26, "THE WIRE / 2026",
-         GREY, 1)
+    hline(BANNER_X0, BANNER_X1, y + RULE_Y_OFFSET, INK, 3)
+    hline(BANNER_X0, BANNER_X1, y + RULE2_Y_OFFSET, RULE, 1)
+    return y
 
 
-draw()
+def draw_banner(base_y):
+    """Draw the lead story banner below the masthead."""
+    by0 = base_y + BANNER_Y0_OFFSET
+    by1 = by0 + BANNER_HEIGHT
+    rect(BANNER_X0, by0, BANNER_X1, by1, DARKPANEL)
+    rect(BANNER_X0, by0, BANNER_X0 + BANNER_ACCENT_W, by1, RED)
+    tx = BANNER_X0 + 30
+    text(tx, by0 + 12, "LEAD STORY - COP31 ANTALYA", (230, 220, 200), 2)
+    text(tx, by0 + 36, "CLIMATE SUMMIT COLLAPSES", PAPER, 3)
+    text(tx, by0 + 64, "NO FOSSIL-FUEL AGREEMENT", PAPER, 3)
+    text(tx, by0 + 96, "EU AND ISLAND NATIONS REJECT DRAFT - REUTERS", (200, 200, 205), 2)
+    return by1
+
+
+def draw_card(x0, y0, w, h, accent, tag, lines):
+    """Draw a single story card at (x0, y0) with given dimensions."""
+    rect(x0, y0, x0 + w, y0 + h, (255, 253, 248))
+    rect(x0, y0, x0 + w, y0 + h, RULE)
+    rect(x0, y0, x0 + w, y0 + 3, accent)
+    tag_w = twidth(tag, 1)
+    rect(x0 + 8, y0 + 9, x0 + 8 + tag_w + 8, y0 + 21, accent)
+    text(x0 + 12, y0 + 12, tag, PAPER, 1)
+    for k, line in enumerate(lines):
+        text(x0 + 8, y0 + 24 + k * 16, line, INK, 2)
+    # map-pin dot
+    rect(x0 + w - 20, y0 + h - 14, x0 + w - 14, y0 + h - 8, accent)
+
+
+def draw_cards(banner_bottom):
+    """Draw the 3x6 grid of story cards."""
+    gy0 = banner_bottom + GRID_Y0_OFFSET
+    for i, (accent, tag, l1, l2, l3) in enumerate(STORIES):
+        r, cix = divmod(i, COLS)
+        x0 = GRID_X0 + cix * (CARD_W + CARD_GAP)
+        y0 = gy0 + r * (CARD_H + CARD_GAP)
+        draw_card(x0, y0, CARD_W, CARD_H, accent, tag, (l1, l2, l3))
+    return gy0
+
+
+def draw_strip(grid_y0):
+    """Draw the date-check and stats strip at the bottom."""
+    my = grid_y0 + 7 * CARD_H + 6 * CARD_GAP + STRIP_Y_OFFSET
+    rect(STRIP_X0, my, STRIP_X1, my + STRIP_H, STRIP_BG)
+    rect(STRIP_X0, my, STRIP_X1, my + STRIP_H, RULE)
+    text(STAT_START_X, my + 9, "DATE CHECK: ALL 18 STORIES SUNDAY 22 NOV 2026 - 9 REGIONS", INK, 2)
+    sx = STAT_START_X
+    for name, val, col in STATS:
+        text(sx, my + STAT_NAME_Y, name, GREY, 2)
+        text(sx, my + STAT_VAL_Y, val, col, 2)
+        sx += STAT_GAP_X
+
+
+def draw_footer():
+    """Draw the footer with sources and branding."""
+    text(FOOTER_X0, FOOTER_Y, "SOURCES: AP - REUTERS - AL JAZEERA - AFP - UN NEWS - ICJ", GREY, 1)
+    text(W - FOOTER_X0 - twidth("THE WIRE / 2026", 1), FOOTER_Y, "THE WIRE / 2026", GREY, 1)
+
+
+def build():
+    """Assemble the full page by calling each section in order."""
+    base_y = draw_masthead()
+    banner_bottom = draw_banner(base_y)
+    grid_y0 = draw_cards(banner_bottom)
+    draw_strip(grid_y0)
+    draw_footer()
+
+
+build()
 
 # ---------------------------------------------------------------- PNG out
 def write_png(path):
